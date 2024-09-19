@@ -2,14 +2,18 @@ package com.chari6268.game_2048;
 
 import androidx.annotation.ColorInt;
 import androidx.annotation.ColorRes;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.webkit.JsResult;
+import android.webkit.WebChromeClient;
+import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-public class WebView extends AppCompatActivity {
+public class WebViewActivity extends AppCompatActivity {
 
     android.webkit.WebView web;
 
@@ -34,15 +38,44 @@ public class WebView extends AppCompatActivity {
             public void onPageStarted(android.webkit.WebView view, String url, Bitmap favicon) {
                 super.onPageStarted(view, url, favicon);
             }
+
             @Override
             public void onPageFinished(android.webkit.WebView view, String url) {
                 super.onPageFinished(view, url);
             }
         });
 
-        // Use the original URL directly
+        web.setWebChromeClient(new WebChromeClient() {
+            @Override
+            public boolean onJsAlert(WebView view, String url, String message, JsResult result) {
+                showGameLostDialog(result);
+                return true; // Indicate that we handled the alert
+            }
+        });
+
+        // Load the initial URL
         String url = "https://game.srinivasachari.tech";
         web.loadUrl(url);
+    }
+
+    private void showGameLostDialog(JsResult result) {
+        new AlertDialog.Builder(this)
+                .setTitle("Game Over")
+                .setMessage("Do you want to start a new game?")
+                .setPositiveButton("Yes", (dialog, which) -> {
+                    result.confirm();
+                    reloadGame();
+                })
+                .setNegativeButton("No", (dialog, which) -> {
+                    result.cancel();
+                    finish();
+                })
+                .setCancelable(false)
+                .show();
+    }
+
+    private void reloadGame() {
+        web.reload();
     }
 
     @ColorInt
