@@ -7,9 +7,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import android.graphics.Bitmap;
+import android.os.Build;
 import android.os.Bundle;
 import android.webkit.JsResult;
 import android.webkit.WebChromeClient;
+import android.webkit.WebResourceError;
+import android.webkit.WebResourceRequest;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
@@ -27,11 +31,16 @@ public class WebViewActivity extends AppCompatActivity {
         web = findViewById(R.id.i_webView);
 
         web.getSettings().setJavaScriptEnabled(true);
+        web.getSettings().setDomStorageEnabled(true); // Enable local storage
         web.getSettings().setSupportZoom(true);
         web.getSettings().setBuiltInZoomControls(true);
         web.getSettings().setDisplayZoomControls(false);
         web.getSettings().setUseWideViewPort(true);
         web.getSettings().setUserAgentString(mobile_mode);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            web.getSettings().setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW); // Allow mixed content
+        }
 
         web.setWebViewClient(new WebViewClient() {
             @Override
@@ -42,6 +51,16 @@ public class WebViewActivity extends AppCompatActivity {
             @Override
             public void onPageFinished(android.webkit.WebView view, String url) {
                 super.onPageFinished(view, url);
+            }
+
+            @Override
+            public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
+                super.onReceivedError(view, request, error);
+                new AlertDialog.Builder(WebViewActivity.this)
+                        .setTitle("Error")
+                        .setMessage("Failed to load the game. Please check your connection.")
+                        .setPositiveButton("OK", null)
+                        .show();
             }
         });
 
@@ -54,7 +73,7 @@ public class WebViewActivity extends AppCompatActivity {
         });
 
         // Load the initial URL
-        String url = "https://game.srinivasachari.tech";
+        String url = "https://game.srinivasachari.tech"; // Change to local file if needed
         web.loadUrl(url);
     }
 
