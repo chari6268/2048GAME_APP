@@ -3,11 +3,11 @@ plugins {
 }
 
 android {
-    namespace 'com.chari6268.game_2048'
+    namespace 'com.chari6268.number_tile_game'
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.chari6268.game_2048"
+        applicationId "com.chari6268.number_tile_game"
         minSdk 26
         targetSdk 33
         versionCode 1

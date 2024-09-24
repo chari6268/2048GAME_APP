@@ -1,4 +1,4 @@
-package com.chari6268.game_2048;
+package com.chari6268.number_tile_game;
 
 import org.junit.Test;
 

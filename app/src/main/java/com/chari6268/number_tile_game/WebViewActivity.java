@@ -1,4 +1,4 @@
-package com.chari6268.game_2048;
+package com.chari6268.number_tile_game;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -17,7 +17,6 @@ import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.TextView;
 import android.widget.LinearLayout;
 import androidx.annotation.ColorInt;
 import androidx.annotation.ColorRes;
