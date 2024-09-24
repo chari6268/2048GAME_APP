@@ -36,24 +36,28 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
 
-      # Step 4: Build the APK using Gradle
+      # Step 4: Grant execution permission to gradlew
+      - name: Make gradlew executable
+        run: chmod +x ./gradlew
+
+      # Step 5: Build the APK using Gradle
       - name: Build APK
         run: ./gradlew assembleDebug
 
-      # Step 5: Upload the APK as an artifact (you can download this from GitHub Actions)
+      # Step 6: Upload the APK as an artifact (you can download this from GitHub Actions)
       - name: Upload APK
         uses: actions/upload-artifact@v3
         with:
           name: app-debug.apk
           path: app/build/outputs/apk/debug/app-debug.apk
 
-      # Step 6: (Optional) Move the APK to apk folder in your repository
+      # Step 7: (Optional) Move the APK to apk folder in your repository
       - name: Move APK to apk folder
         run: |
           mkdir -p apk
           mv app/build/outputs/apk/debug/app-debug.apk apk/app-debug.apk
 
-      # # Step 7: (Optional) Push the apk folder with the APK to your repository
+      # # Step 8: (Optional) Push the apk folder with the APK to your repository
       # - name: Push APK to repository
       #   run: |
       #     git config --global user.email "your-email@example.com"
