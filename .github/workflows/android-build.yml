@@ -77,6 +77,6 @@ jobs:
           git config --global user.email "srinivaschari6268@gmail.com"
           git config --global user.name "srinivasa chari"
           git remote set-url origin https://github.com/chari6268/2048GAME_APP.git
-          git add "upload apk/app-debug.apk"
+          git add "Upload APK/app-debug.apk"
           git commit -m "Update APK"
           git push
