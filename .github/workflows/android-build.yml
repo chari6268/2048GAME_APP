@@ -54,19 +54,17 @@ jobs:
             exit 1
           fi
 
-      # Step 7: Upload the APK as an artifact (you can download this from GitHub Actions)
+      # Step 7: Upload the APK as an artifact
       - name: Upload APK
         uses: actions/upload-artifact@v3
         with:
           name: app-debug.apk
           path: app/build/outputs/apk/debug/app-debug.apk
 
-      # Step 8: Replace the existing APK in the 'upload apk' folder
-      - name: Replace APK in 'upload apk' folder
+      # Step 8: Move APK to 'Upload APK' folder
+      - name: Move APK to 'Upload APK' folder
         run: |
-          if [ -f "Upload APK/app-debug.apk" ]; then
-            rm "Upload APK/app-debug.apk"  # Remove the existing APK
-          fi
+          mkdir -p "Upload APK"
           mv app/build/outputs/apk/debug/app-debug.apk "Upload APK/app-debug.apk"
 
       # Step 9: Push the updated APK to the repository using GITHUB_TOKEN
