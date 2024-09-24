@@ -60,10 +60,11 @@ jobs:
       # Step 8: Push the apk folder with the APK to your repository
       - name: Push APK to repository
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
         run: |
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git config --global user.name "GitHub Actions"
+          git remote set-url origin https://x-access-token:${{ secrets.PAT_TOKEN }}@github.com/chari6268/2048GAME_APP.git
           git add apk/app-debug.apk
           git commit -m "Add new APK"
           git push
