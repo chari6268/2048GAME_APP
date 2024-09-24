@@ -44,18 +44,24 @@ jobs:
       - name: Build APK
         run: ./gradlew assembleDebug
 
-      # Step 6: Upload the APK as an artifact (you can download this from GitHub Actions)
+      # Step 6: Verify the APK was built successfully
+      - name: Verify APK existence
+        run: |
+          if [ -f "app/build/outputs/apk/debug/app-debug.apk" ]; then
+            echo "APK exists."
+          else
+            echo "APK does not exist. Build may have failed."
+            exit 1
+          fi
+
+      # Step 7: Upload the APK as an artifact (you can download this from GitHub Actions)
       - name: Upload APK
         uses: actions/upload-artifact@v3
         with:
           name: app-debug.apk
           path: app/build/outputs/apk/debug/app-debug.apk
 
-      # Step 7: (Optional) Move the APK to apk folder in your repository
-      - name: Move APK to apk folder
-        run: |
-          mkdir -p apk
-          mv app/build/outputs/apk/debug/app-debug.apk apk/app-debug.apk
+      # Step 8: Replace the existing APK in the 'upload apk' folder
       - name: Replace APK in 'upload apk' folder
         run: |
           if [ -f "upload apk/app-debug.apk" ]; then
@@ -63,10 +69,10 @@ jobs:
           fi
           mv app/build/outputs/apk/debug/app-debug.apk "upload apk/app-debug.apk"
 
-      # Step 8: Push the updated APK to the repository
+      # Step 9: Push the updated APK to the repository using GITHUB_TOKEN
       - name: Push APK to repository
         env:
-          GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}  # Ensure you have set this secret
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Use the default GitHub Actions token
         run: |
           git config --global user.email "srinivaschari6268@gmail.com"
           git config --global user.name "srinivasa chari"
