@@ -64,10 +64,10 @@ jobs:
       # Step 8: Replace the existing APK in the 'upload apk' folder
       - name: Replace APK in 'upload apk' folder
         run: |
-          if [ -f "upload apk/app-debug.apk" ]; then
-            rm "upload apk/app-debug.apk"  # Remove the existing APK
+          if [ -f "Upload APK/app-debug.apk" ]; then
+            rm "Upload APK/app-debug.apk"  # Remove the existing APK
           fi
-          mv app/build/outputs/apk/debug/app-debug.apk "upload apk/app-debug.apk"
+          mv app/build/outputs/apk/debug/app-debug.apk "Upload APK/app-debug.apk"
 
       # Step 9: Push the updated APK to the repository using GITHUB_TOKEN
       - name: Push APK to repository
