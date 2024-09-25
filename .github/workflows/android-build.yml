@@ -70,11 +70,11 @@ jobs:
       # Step 9: Push the updated APK to the repository using GITHUB_TOKEN
       - name: Push APK to repository
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Use the default GitHub Actions token
+          GITHUB_TOKEN: ${{ secrets.MY_GITHUB_TOKEN }}  # Use your personal access token
         run: |
           git config --global user.email "srinivaschari6268@gmail.com"
           git config --global user.name "srinivasa chari"
-          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/chari6268/2048GAME_APP.git
-          git add "Upload APK/app-debug.apk"
-          git commit -m "Update APK"
+          git remote set-url origin https://x-access-token:${{ secrets.MY_GITHUB_TOKEN }}@github.com/chari6268/2048GAME_APP.git
+          git add "Upload APK/"
+          git commit -m "new release"
           git push
